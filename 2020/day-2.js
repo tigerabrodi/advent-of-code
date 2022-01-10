@@ -4,16 +4,13 @@ const fs = require("fs");
 const content = fs.readFileSync("./input-2.txt", "utf-8");
 
 const matches = content.split("\n").map((fullString) => {
-  const [match, firstNumber, secondNumber, character, password] =
-    fullString.match(/^(\d+)-(\d+) (\S): (\S+)$/);
-
-  const numOfCharacters = password
-    .split("")
-    .filter((char) => char === character).length;
+  const [match, pos1, pos2, character, password] = fullString.match(
+    /^(\d+)-(\d+) (\S): (\S+)$/
+  );
 
   return (
-    numOfCharacters >= Number(firstNumber) &&
-    numOfCharacters <= Number(secondNumber)
+    (password[Number(pos1) - 1] === character) ^
+    (password[Number(pos2) - 1] === character)
   );
 });
 
